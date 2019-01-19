@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/css.css"/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+    <script src="assets/javascript/js.js"></script>
+    </head>
+    <style>
+        body {
+            background-image: url("https://blog.beeminder.com/wp-content/uploads/2011/07/ybr-big.jpg");
+            background-repeat: no-repeat;
+             background-size: 100%;
+        }
+    </style>
+        
+<body>
+   
+<h4 class="text-center" style="color: #eeff00">Click on a button to display 10 GIPH images and their ratings.</p></h4>
+
+<!-- This will be where the buttons are added and displayed. -->
+<div id="buttonItems"></div>
+
+<!-- This is the form to add an oz-themed button to the array. -->
+<form>
+    <div class="row">
+        <div class="col-md-3">
+            <input type="text" id="oz-input" class="form-control" placeholder="Add folks here...">
+        </div>
+        <input id="addFolks" type="submit" class="btn btn-success" value="click for results">
+        <!-- If there are any error messages, they will appear here -->
+        <span id="entry" style="color: white; background: red"></span>
+    </div>
+</form>
+
+<!-- This is where the ratings and images will be shown when the user clicks a movie button. --> 
+<div id="ratings"></div>
+
+<script type="text/javascript" src="assets/javascript/js.js">
+
+</body>
+</html>
