@@ -1,48 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
+
+<head>
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Yipee GIPHY</title>
+    
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="Assets/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="Assets/css/style.css">
 
-    <link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
-    <link rel="stylesheet" type="text/css" href="assets/css/css.css"/>
+</head>
+<style>
+    body {
+        background-color: rgb(240, 106, 211);
+        background-repeat: no-repeat;
+        background-size: 99.9%;
+    }
+</style>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-
-    <script src="assets/javascript/js.js"></script>
-    </head>
-    <style>
-        body {
-            background-image: url("https://blog.beeminder.com/wp-content/uploads/2011/07/ybr-big.jpg");
-            background-repeat: no-repeat;
-             background-size: 100%;
-        }
-    </style>
-        
 <body>
-   
-<h4 class="text-center" style="color: #eeff00">Click on a button to display 10 GIPH images and their ratings.</p></h4>
-
-<!-- This will be where the buttons are added and displayed. -->
-<div id="buttonItems"></div>
-
-<!-- This is the form to add an oz-themed button to the array. -->
-<form>
-    <div class="row">
-        <div class="col-md-3">
-            <input type="text" id="oz-input" class="form-control" placeholder="Add folks here...">
+    <div class="container">
+		<div class="jumbotron text-center">
+			<h1>Teen Movies</h1>
+		</div>
+		<div class="row">
+            <div class id="movie-buttons"></div>
+            <button id="movies" movies="breakfast-club">Breakfast-Club</button>
+            <button id="movies" movies="clueless">Clueless</button>
+            <button id="movies" movies="sixteen-candles">Sixteen Candles</button>
+            <button id="movies" movies="american-pie">American Pie</button>
+            <button id="movies" movies="stand-by-me">Stand By Me</button>
+            <button id="movies" movies="pretty-in-pink">Pretty In Pink</button>
+            <button id="movies" movies="sisterhood-of-the-traveling-pants">Sisterhood Of The Traveling Pants</button>
+            <button id="movies" movies="the-sand-lot">The Sand Lot</button>
         </div>
-        <input id="addFolks" type="submit" class="btn btn-success" value="click for results">
-        <!-- If there are any error messages, they will appear here -->
-        <span id="entry" style="color: white; background: red"></span>
-    </div>
-</form>
-
-<!-- This is where the ratings and images will be shown when the user clicks a movie button. --> 
-<div id="ratings"></div>
-
-<script type="text/javascript" src="assets/javascript/js.js">
-
+			</div>
+			<div class="col-sm-4">
+				<form id="form">
+					<label for="movie-input">Add a movie</label><br>
+					<input type="text" id="movie-input">
+					<input id="add-movie" type="submit" value="Submit">
+				</form>
+			</div>
+	</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
+<script type="text/javascript" src="Assets/javascript/app.js"></script>
 </body>
 </html>
+
+</body>
+       
