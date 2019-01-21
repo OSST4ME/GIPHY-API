@@ -1,54 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>GIPHY API</title>
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Yipee GIPHY</title>
-    
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="Assets/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="Assets/css/style.css">
-
-</head>
-<style>
-    body {
-        background-color: rgb(240, 106, 211);
-        background-repeat: no-repeat;
-        background-size: 99.9%;
-    }
-</style>
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    	
+    </head>
+    <style>
+        body {
+            background-color: rgb(240, 106, 211);
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+        button,
+        div,
+        form,
+        input {
+          margin: 10px;
+        }
+    </style>
 <body>
     <div class="container">
 		<div class="jumbotron text-center">
-			<h1>Teen Movies</h1>
-		</div>
-		<div class="row">
-            <div class id="movie-buttons"></div>
-            <button id="movies" movies="breakfast-club">Breakfast-Club</button>
-            <button id="movies" movies="clueless">Clueless</button>
-            <button id="movies" movies="sixteen-candles">Sixteen Candles</button>
-            <button id="movies" movies="american-pie">American Pie</button>
-            <button id="movies" movies="stand-by-me">Stand By Me</button>
-            <button id="movies" movies="pretty-in-pink">Pretty In Pink</button>
-            <button id="movies" movies="sisterhood-of-the-traveling-pants">Sisterhood Of The Traveling Pants</button>
-            <button id="movies" movies="the-sand-lot">The Sand Lot</button>
+			<h1>Coming of Age Movies</h1>
         </div>
-			</div>
-			<div class="col-sm-4">
-				<form id="form">
-					<label for="movie-input">Add a movie</label><br>
-					<input type="text" id="movie-input">
-					<input id="add-movie" type="submit" value="Submit">
-				</form>
-			</div>
-	</div>
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
-<script type="text/javascript" src="Assets/javascript/app.js"></script>
+    <div class="container">
+        <div class="row text-center">
+            <h2>Here are a few teen angst, coming of age movies.  Click to see your favorite characters, or 
+                add your own selections to the list.</h2>
+
+<div id="buttonItems"></div>
+
+<form>
+    <div class="row">
+        <div class="col-md-3">
+            <input type="text" id="movie-input" class="form-control" placeholder="Your movie...">
+        </div>
+        <input id="addMovieThing" type="submit" class="btn btn-success" value="Submit">
+   
+        <span id="entry" style="color: white; background: red"></span>
+    </div>
+</form>
+
+<div id="ratings"></div>
+
+<script type="text/javascript">
+    
+	var movieStuff = ["Breakfast Club", "Sixteen Candles", "American Pie", "Stand By Me", "The Sisterhood Of The Traveling Pants", "The Sandlot", "Pretty In Pink"];
+    var movieImage = "";
+
+function showButtons () {
+    $("#buttonItems").empty();
+    $("#movie-input").val("");
+    for (var i = 0; i < movieStuff.length; i++) {
+        var button = $("<button class='btn btn-primary'>");
+        button.addClass("movie");
+        button.attr("movie-name", movieStuff[i]);
+        button.text(movieStuff[i]);
+        $("#buttonItems").append(button);
+        $("#buttonItems").append(" ");
+    }
+}
+showButtons();
+
+$("#addMovieThing").on("click", function(event) {
+    $("#entry").empty();
+    event.preventDefault();
+    var movieInput = $("#movie-input").val().trim();
+    var movieTerm = $(this).attr("movie-name");
+    
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movieInput + "&limit=2&api_key=dc6zaTOxFJmzC";
+        $.ajax({ url: queryURL, method: "GET"}).done(function(response) {
+        if (response.pagination.total_count >= 10) {
+            movieStuff.push(movieInput);
+            showButtons(); }
+        else if (response.pagination.total_count === 0) {
+            $("#entry").html(" Sorry, there were no results for this.  Please try again."); }
+        else if (response.pagination.total_count === 1) { $("#entry").html(" Sorry, there was only 1 result for this.  Please try again."); }
+        else { $("#entry").html(" Sorry, there were only " + response.pagination.total_count + " results for this.  Please try again."); }
+        $("#space-input").val("");
+        });
+});
+
+$(document).on("click", ".movie", display);
+function display() {
+        $("#entry").empty();
+    var movieTerm = $(this).attr("movie-name");
+    
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movieTerm + "&limit=10&api_key=dc6zaTOxFJmzC";
+    $.ajax({ url: queryURL, method: "GET"}).done(function(response) {
+        
+        for (var j = 0; j < response.data.length; j++) {
+            
+            var active = response.data[j].images.fixed_width.url;
+            var still = response.data[j].images.fixed_width_still.url;
+            var rating = "Rating: " + (response.data[j].rating).toUpperCase();
+            var movieImage = $("<img>");
+            
+            var ratingDiv = $("<div id='ratingDiv'>" + rating + "</div>");
+            $(ratingDiv).css({"text-align":"center", "font-size":"20px", "width":"200", "display":"block"});
+            movieImage.attr({"active":active, "still":still, "src":still, "state":"still"});
+           
+            var ratingAndImage = $("<div>");
+            $(ratingAndImage).css({"float":"left"});
+            $(ratingAndImage).prepend(ratingDiv, movieImage);
+            
+            $("#ratings").prepend(ratingAndImage);
+            
+            $(movieImage).on("click", function(event) {
+               
+                $("#entry").empty();
+                
+                var state = $(this).attr("state");
+                var source = $(this).attr("src");
+                if (state === "still") {
+                $(this).attr("src", $(this).attr("active"));
+                $(this).attr("state", "active"); }
+                else {
+                $(this).attr("src", $(this).attr("still"));
+                $(this).attr("state", "still"); } 
+            });
+        }
+   });
+}
+</script>
 </body>
 </html>
-
-</body>
-       
